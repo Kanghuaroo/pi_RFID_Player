@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
-import PRi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
-scanner = SimpleMFRC522()
+reader = SimpleMFRC522()
+print('here')
 
 try:
-	text, msg = input reader.read()
-	print(text)
-	print(msg)
+        text, msg = reader.read()
+        print(text)
+        print(msg)
+        print('done')
 finally:
-	GPIO.cleanup()
+        GPIO.cleanup()
+        print('clean')
