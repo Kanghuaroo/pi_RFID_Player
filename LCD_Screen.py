@@ -25,3 +25,11 @@ class LCD_Screen:
             self.lcd.message('\n' + song[16:])
         else:
             self.lcd.message(song)
+
+    def countdown(self, output, time, split):
+        if time <= 0:
+            return
+        temp = output.split(split)
+        self.write(temp[0] + str(time) + "secs" + split + temp[1])
+        sleep(1)
+        self.countdown(output, time-1, split)

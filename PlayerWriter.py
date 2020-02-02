@@ -7,12 +7,9 @@ from mfrc522 import SimpleMFRC522
 
 def PlayerWriter(uri, rfid):
     print('Card to Write ')
-    msg = uri
-    text = msg['item']['uri']
-    print(msg['item']['uri'])
-    
-    print('writing ' + text)
+    print(uri)
+    print('Writing ' + uri)
     print("Now place your tag to write")
-    rfid.write(text)
+    rfid.write(uri)
     print("Written")
 

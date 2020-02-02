@@ -49,10 +49,12 @@ try:
     reader.update_LCD()
     
     while True:
+        print("Scan a Card")
         text = rfid.read()
         #wait a sec to see if more are pressed
         if GPIO.input(button1) == GPIO.HIGH or GPIO.input(button2) == GPIO.HIGH or GPIO.input(button3) == GPIO.HIGH:
             print("Wait...")
+            reader.write_to_LCD("Please Wait...")
             print(button1, button2, button3)
             print(GPIO.input(button1),
                     GPIO.input(button2),
@@ -60,6 +62,9 @@ try:
             sleep(1)
 
         if (GPIO.input(button1) == GPIO.HIGH and GPIO.input(button2) == GPIO.HIGH) or (GPIO.input(button2) == GPIO.HIGH and GPIO.input(button3) == GPIO.HIGH):
+            print("Stop Holding")
+            reader.write_to_LCD("Stop Holding")
+            sleep(1)
             reader.write_to_card(rfid, Pins)
         
         elif GPIO.input(button1) == GPIO.HIGH:
@@ -74,8 +79,9 @@ try:
         else:
             playback.changeSong(text)
 
+        sleep(2)
         reader.update_LCD()
-        sleep(5)
+        sleep(3)
 except KeyboardInterrupt:
     GPIO.cleanup()
 finally:
