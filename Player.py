@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+#import sys
 from time import sleep
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
@@ -9,6 +9,28 @@ import spotipy.util as util
 from PlaybackModifier import PlaybackModifier
 from Reader import Reader
 
+#init of pin stuff
+#check GPIO pin mode
+if GPIO.getmode() == 10:
+    #GPIO.BOARD
+    button1 = 40
+    button2 = 38
+    button3 = 32
+elif GPIO.getmode() == 11:
+    #GPIO.BCM
+    button1 = 21
+    button2 = 20
+    button3 = 12
+else:
+    GPIO.setmode(GPIO.BOARD)
+    button1 = 40
+    button2 = 38
+    button3 = 32
+Pins = [button1, button2, button3]
+rfid = SimpleMFRC522()
+GPIO.setup(button1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(button2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(button3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 ID='bf8057981097462a95729337360b7f03'
 SECRET='264737bc4ad443429635d93babefc597'
 URI='https://localhost/'
@@ -22,30 +44,37 @@ sp = spotipy.Spotify(auth=token)
 reader = Reader(sp)
 playback = PlaybackModifier(sp)
 
-#init of pin stuff
-button1 = 40
-button2 = 38
-button3 = 32
-rfid = SimpleMFRC522()
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(button1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(button2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(button3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 try:
+    reader.update_LCD()
+    
     while True:
-        playback.changeSong(rfid)
-        reader.update_LCD()
+        text = rfid.read()
+        #wait a sec to see if more are pressed
+        if GPIO.input(button1) == GPIO.HIGH or GPIO.input(button2) == GPIO.HIGH or GPIO.input(button3) == GPIO.HIGH:
+            print("Wait...")
+            print(button1, button2, button3)
+            print(GPIO.input(button1),
+                    GPIO.input(button2),
+                    GPIO.input(button3))
+            sleep(1)
+
+        if (GPIO.input(button1) == GPIO.HIGH and GPIO.input(button2) == GPIO.HIGH) or (GPIO.input(button2) == GPIO.HIGH and GPIO.input(button3) == GPIO.HIGH):
+            reader.write_to_card(rfid, Pins)
         
-        if GPIO.input(button1) == GPIO.HIGH:
-            print("Button 1 Pressed!")
+        elif GPIO.input(button1) == GPIO.HIGH:
+            print('skip')
             playback.skip()
         elif GPIO.input(button2) == GPIO.HIGH:
-            print("Button 2 Pressed!!")
+            print('pasue')
             playback.pause()
         elif GPIO.input(button3) == GPIO.HIGH:
-            print("Button 3 Pressed!!!")
+            print('rewind time')
+            playback.rewind()
+        else:
+            playback.changeSong(text)
 
+        reader.update_LCD()
         sleep(5)
 except KeyboardInterrupt:
     GPIO.cleanup()

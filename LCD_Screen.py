@@ -18,7 +18,7 @@ class LCD_Screen:
         self.lcd = LCD.Adafruit_CharLCD(rs,en,d4,d5,d6,d7,cols,rows,backlight)
     
     #Print Song name
-    def writeSong(self, song):
+    def write(self, song):
         self.lcd.clear()
         if len(song) > 16:
             self.lcd.message(song[:16])
