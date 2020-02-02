@@ -17,7 +17,6 @@ class PlaybackModifier:
             text = text.strip(' ')
             
             print(text)
-            print(text.find('text'))
             #how to play text
             if text.find('track') != -1:
                 self.modifyPlayer.start_playback(uris=[text])
@@ -26,8 +25,8 @@ class PlaybackModifier:
                 self.modifyPlayer.shuffle(state=True)
                 self.modifyPlayer.start_playback(context_uri=text)
             elif text.find('artist') != -1:
-                self.modifyPlayer.shuffle(state=True)
                 self.modifyPlayer.start_playback(context_uri=text)
+                self.modifyPlayer.shuffle(state=True)
     
     def skip(self):
         self.modifyPlayer.next_track()

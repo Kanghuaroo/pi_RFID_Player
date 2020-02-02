@@ -55,10 +55,6 @@ try:
         if GPIO.input(button1) == GPIO.HIGH or GPIO.input(button2) == GPIO.HIGH or GPIO.input(button3) == GPIO.HIGH:
             print("Wait...")
             reader.write_to_LCD("Please Wait...")
-            print(button1, button2, button3)
-            print(GPIO.input(button1),
-                    GPIO.input(button2),
-                    GPIO.input(button3))
             sleep(1)
 
         if (GPIO.input(button1) == GPIO.HIGH and GPIO.input(button2) == GPIO.HIGH) or (GPIO.input(button2) == GPIO.HIGH and GPIO.input(button3) == GPIO.HIGH):
@@ -79,9 +75,9 @@ try:
         else:
             playback.changeSong(text)
 
-        sleep(2)
+        sleep(1)
         reader.update_LCD()
-        sleep(3)
+        sleep(2)
 except KeyboardInterrupt:
     GPIO.cleanup()
 finally:
