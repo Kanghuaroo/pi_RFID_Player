@@ -4,13 +4,10 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
 reader = SimpleMFRC522()
-print('here')
-
+print('Scan')
 try:
         text, msg = reader.read()
-        print(text)
-        print(msg)
-        print('done')
+        print('text', text)
+        print('msg', msg)
 finally:
         GPIO.cleanup()
-        print('clean')
