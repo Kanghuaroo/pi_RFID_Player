@@ -15,6 +15,11 @@ class LCD_Screen:
         sleep(5)
         self.lcd.clear()
 
+    #Print Song name
+    def writeSong(self, song):
+        self.lcd.clear()
+        self.lcd.write_string(song)
+
     #Print a song to the LCD Screen
     def writeSong(self, song, time):
         self.lcd.clear()

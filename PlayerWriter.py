@@ -15,21 +15,19 @@ token = util.prompt_for_user_token(username='lyirk',scope=scope,client_id=ID,cli
 sp = spotipy.Spotify(auth=token)
 reader = SimpleMFRC522()
 
-#sp.current_playback()
-currentPlayback(sp)
-input("\nbreak here")
-print('Card to Write ')
-msg = (sp.current_playback())
-
-text = msg['item']['uri']
-
-print(msg['item']['uri'])
-
-try:
-    print('writing ' + text)
-    print("Now place your tag to write")
-    reader.write(text)
-    print("Written")
-finally:
-    GPIO.cleanup()
+def PlayerWriter(sp):
+    print('Card to Write ')
+    msg = (sp.current_playback())
+    
+    text = msg['item']['uri']
+    
+    print(msg['item']['uri'])
+    
+    try:
+        print('writing ' + text)
+        print("Now place your tag to write")
+        reader.write(text)
+        print("Written")
+    finally:
+        GPIO.cleanup()
 

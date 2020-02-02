@@ -48,7 +48,8 @@ try:
             modifyPlayer.start_playback(context_uri=text)
         
         #Print to LCD Screen
-        #lcd.writeSong()
+        #PlayerWriter(readerPlayer.currnet_playback()['item']['uri'])
+        lcd.writeSong(readerPlayer.current_playback()['item']['name'])
 
         sleep(5)
 except KeyboardInterrupt:
