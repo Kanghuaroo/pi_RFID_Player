@@ -1,5 +1,5 @@
 from RPLCD.gpio import CharLCD
-from RPi import GPIO
+from RPi.GPIO import GPIO
 from time import sleep
 
 

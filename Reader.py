@@ -1,13 +1,13 @@
 import spotipy
-import spoipy.util as util
+import spotipy.util as util
 from LCD_Screen import LCD_Screen
 from PlayerWriter import PlayerWriter
 
 class Reader:
 
-    def __inti__(self):
+    def __init__(self):
         
-        ID='bf8057981097462a95729337360b7f03'
+        ID='1138b697263c'
         SECRET='264737bc4ad443429635d93babefc597'
         URI='https://localhost/'
         
@@ -18,8 +18,8 @@ class Reader:
         self.readerPlayer = spotipy.Spotify(auth=songToken)
         self.lcd = LCD_Screen()
 
-        def upadte_LCD(self):
-            lcd.writeSong(readerPlayer.current_playback()['item']['name'])
+    def update_LCD(self):
+        self.lcd.writeSong(self.readerPlayer.current_playback()['item']['name'])
 
-        def write_to_card(self, uri):
-            self.PlayerWriter(readerPlayer.currnet_playback()['item']['uri'])
+    def write_to_card(self, uri):
+        self.PlayerWriter(self.readerPlayer.currnet_playback()['item']['uri'])

@@ -7,15 +7,15 @@ from mfrc522 import SimpleMFRC522
 from PlaybackModifier import PlaybackModifier
 from Reader import Reader
 
-reader = SimpleMFRC522()
+rfid = SimpleMFRC522()
 #lcd = LCD_Screen()
 
 playback = PlaybackModifier()
-reader = Reader() 
+reader = Reader()
 
 try:
     while True:
-        playback.changeSong()
+        playback.changeSong(rfid)
         reader.update_LCD()
 
         sleep(5)
