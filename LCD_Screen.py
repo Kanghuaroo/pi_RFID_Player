@@ -1,31 +1,27 @@
-from RPLCD.gpio import CharLCD
-from RPi.GPIO import GPIO
+import Adafruit_CharLCD as LCD
 from time import sleep
 
 
 class LCD_Screen:
 
     def __init__(self):
-        self.lcd = CharLCD(cols=16, rows=2, pin_rs=37, pin_e=35, 
-                pins_data=[33,31,29,36],numbering_mode=GPIO.BOARD)
+        #GPIO #, not pin#
+        rs = 26 #37
+        en = 19 #35
+        d4 = 13 #33
+        d5 = 6 #31
+        d6 = 5 #29
+        d7 = 16 #36
+        backlight = 2
+        cols = 16
+        rows = 2
+        self.lcd = LCD.Adafruit_CharLCD(rs,en,d4,d5,d6,d7,cols,rows,backlight)
     
-    #Basic write to LCD Screen
-    def write(self, Str):
-        self.lcd.write_string(Str)
-        sleep(5)
-        self.lcd.clear()
-
     #Print Song name
     def writeSong(self, song):
         self.lcd.clear()
-        if len(song) > 32:
-            song = song[:32]
-        self.lcd.write_string(song)
-
-    #Print a song to the LCD Screen
-    def writeSongAndTime(self, song, time):
-        self.lcd.clear()
         if len(song) > 16:
-            song = song[:16]
-        self.lcd.write_string(song)
-        self.lcd.write_string(time)
+            self.lcd.message(song[:16])
+            self.lcd.message('\n' + song[16:])
+        else:
+            self.lcd.message(song)

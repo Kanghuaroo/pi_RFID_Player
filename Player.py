@@ -7,11 +7,11 @@ from mfrc522 import SimpleMFRC522
 from PlaybackModifier import PlaybackModifier
 from Reader import Reader
 
-rfid = SimpleMFRC522()
-#lcd = LCD_Screen()
-
-playback = PlaybackModifier()
 reader = Reader()
+playback = PlaybackModifier()
+
+rfid = SimpleMFRC522()
+
 
 try:
     while True:
