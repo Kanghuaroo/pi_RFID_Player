@@ -6,7 +6,7 @@ from time import sleep
 class LCD_Screen:
 
     def __init__(self):
-        lcd = CharLCD(cols=16, rows=2, pin_rs=37, pin_e=35, 
+        self.lcd = CharLCD(cols=16, rows=2, pin_rs=37, pin_e=35, 
                 pins_data=[33,31,29,36],numbering_mode=GPIO.BOARD)
     
     #Basic write to LCD Screen
@@ -18,10 +18,12 @@ class LCD_Screen:
     #Print Song name
     def writeSong(self, song):
         self.lcd.clear()
+        if len(song) > 32:
+            song = song[:32]
         self.lcd.write_string(song)
 
     #Print a song to the LCD Screen
-    def writeSong(self, song, time):
+    def writeSongAndTime(self, song, time):
         self.lcd.clear()
         if len(song) > 16:
             song = song[:16]
