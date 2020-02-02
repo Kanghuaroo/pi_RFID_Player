@@ -22,16 +22,17 @@ try:
         #Song URI is in the text var
         id, text = reader.read()
         print("ID:  %s\nText: %s" % (id,text))
+        text.strip()
 
         #what is text?
         if text.find('text') != 1:
-            sp.start_playback(uris = [text])
-        elif text.find('playlist' != -1:
+            sp.start_playback(uris=text)
+        elif text.find('playlist') != -1:
             sp.shuffle(state=True)
-            sp.start_playback(context_uri = text)
+            sp.start_playback(context_uri=text)
         elif text.find('artist') != -1:
             sp.shuffle(state=True)
-            sp.start_playback(context_uri = text)
+            sp.start_playback(context_uri=text)
 
         sleep(5)
 except KeyboardInterrupt:
