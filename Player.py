@@ -8,9 +8,9 @@ import spotipy
 import spotipy.util as util
 
 scope = 'user-modify-playback-state'
-ID='52f5fff3d7aa44d6a75522471ef094d7'
-SECRET='15a676a209884a2bbaf28f1afc629e58'
-URI='http://localhost/'
+ID='bf8057981097462a95729337360b7f03'
+SECRET='264737bc4ad443429635d93babefc597'
+URI='https://localhost/'
 
 token = util.prompt_for_user_token(username='lyirk',scope=scope,client_id=ID,client_secret=SECRET, redirect_uri=URI)
 sp = spotipy.Spotify(auth=token)
@@ -20,13 +20,16 @@ try:
     while True:
         print('Hold a Song Card Near...')
         #Song URI is in the text var
-        id, text = reader.read()
-        print("ID:  %s\nText: %s" % (id,text))
-        text.strip()
+        text = reader.read()
+        text = str(text[1])
+        print("Text: " + (text))
+        text = text.strip(' ')
+        print(len(text))
+        print(text + "end")
 
         #what is text?
         if text.find('text') != 1:
-            sp.start_playback(uris=text)
+            sp.start_playback(uris=[text])
         elif text.find('playlist') != -1:
             sp.shuffle(state=True)
             sp.start_playback(context_uri=text)
